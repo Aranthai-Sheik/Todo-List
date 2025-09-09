@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login To-Do List</title>
+  <style>
+    body {
+      background: #f0f0f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      margin: 0;
+      padding-top: 50px;
+    }
+    .container {
+      width: 350px;
+    }
+    #login-container {
+      background: #f46a20; 
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: block;
+    }
+    #login-container.hidden {
+      display: none;
+    }
+    #login-container h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+      font-size: 24px;
+      color: #000;
+    }
+    #login-container input[type="text"],
+    #login-container input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      outline: none;
+    }
+    #login-container button {
+      width: 100%;
+      background: #f2f569;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #000;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+    #login-container button:hover {
+      background: #d7d838;
+    }
+    #todo-container {
+      background: #f46a20; 
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 350px;
+      display: none;
+    }
+    #todo-container.active {
+      display: block;
+    }
+    #todo-container h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+      font-size: 24px;
+      color: #000;
+    }
+    #todo-container h1::before {
+      content: "📝 ";
+    }
+    .input-section {
+      display: flex;
+      gap: 10px;
+    }
+    #todo-container input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      outline: none;
+    }
+    #todo-container button {
+      background: #f2f569; /* bright yellow */
+      border: none;
+      border-radius: 6px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #000;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+    #todo-container button:hover {
+      background: #dfeb3d;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    li {
+      background: #9fdc8c; /* light green */
+      padding: 12px 15px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.05);
+    }
+    li span {
+      flex-grow: 1;
+      user-select: none;
+    }
+    .delete-btn {
+      background: none;
+      border: none;
+      color: #e85c7a; /* pinkish */
+      font-size: 20px;
+      cursor: pointer;
+      margin-left: 15px;
+      transition: color 0.3s ease;
+    }
+    .delete-btn:hover {
+      color: #c5395a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="login-container">
+      <h1>🔐 Login</h1>
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+    </div>
+    <div id="todo-container">
+      <h1>To-Do List</h1>
+      <div class="input-section">
+        <input type="text" id="task-input" placeholder="Enter a task..." />
+        <button onclick="addTask()">Add</button>
+      </div>
+      <ul id="task-list"></ul>
+    </div>
+  </div>
+  <script>
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+      const validUsername = "sheik";
+      const validPassword = "sheik321";
+      if (username === validUsername && password === validPassword) {
+        document.getElementById("login-container").classList.add("hidden");
+        document.getElementById("todo-container").classList.add("active");
+      } else {
+        alert("Invalid username or password.");
+      }
+    }
+    function addTask() {
+      const input = document.getElementById("task-input");
+      const taskText = input.value.trim();
+      if (taskText === "") {
+        alert("Please enter a task.");
+        return;
+      }
+      const taskList = document.getElementById("task-list");
+      const li = document.createElement("li");
+      const span = document.createElement("span");
+      span.textContent = taskText;
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "❌";
+      deleteBtn.className = "delete-btn";
+      deleteBtn.onclick = () => li.remove();
+      li.appendChild(span);
+      li.appendChild(deleteBtn);
+      taskList.appendChild(li);
+      input.value = "";
+      input.focus();
+    }
+  </script>
+</body>
+</html>
